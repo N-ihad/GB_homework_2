@@ -26,6 +26,7 @@
 		20493C072562EDC900AF4972 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20493C062562EDC900AF4972 /* Utilities.swift */; };
 		20493C12256310DB00AF4972 /* FriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20493C11256310DB00AF4972 /* FriendCell.swift */; };
 		20493C1A25631D9300AF4972 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20493C1925631D9300AF4972 /* User.swift */; };
+		20A4E266258F8664003D33BF /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A4E265258F8664003D33BF /* Session.swift */; };
 		20F990C2256C069C00718F03 /* FriendPhotosCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F990C1256C069C00718F03 /* FriendPhotosCell.swift */; };
 		20F990C8256D748500718F03 /* AnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F990C7256D748500718F03 /* AnimationController.swift */; };
 		20F99115256FFEF300718F03 /* AnimationControllerForGroups.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F99114256FFEF300718F03 /* AnimationControllerForGroups.swift */; };
@@ -53,6 +54,7 @@
 		20493C062562EDC900AF4972 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		20493C11256310DB00AF4972 /* FriendCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendCell.swift; sourceTree = "<group>"; };
 		20493C1925631D9300AF4972 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		20A4E265258F8664003D33BF /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		20F990C1256C069C00718F03 /* FriendPhotosCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendPhotosCell.swift; sourceTree = "<group>"; };
 		20F990C7256D748500718F03 /* AnimationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationController.swift; sourceTree = "<group>"; };
 		20F99114256FFEF300718F03 /* AnimationControllerForGroups.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationControllerForGroups.swift; sourceTree = "<group>"; };
@@ -183,6 +185,7 @@
 		20F9C043258D339D00EB7F38 /* API */ = {
 			isa = PBXGroup;
 			children = (
+				20A4E265258F8664003D33BF /* Session.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -270,6 +273,7 @@
 				20493BFD2562D03900AF4972 /* NewsVC.swift in Sources */,
 				20493C002562DD1900AF4972 /* Extensions.swift in Sources */,
 				2001023925642D5B004855C0 /* FriendDetailsCollectionVC.swift in Sources */,
+				20A4E266258F8664003D33BF /* Session.swift in Sources */,
 				203D198A25646B1700C6FA39 /* Post.swift in Sources */,
 				20493C12256310DB00AF4972 /* FriendCell.swift in Sources */,
 				2001023F25645D65004855C0 /* GroupCell.swift in Sources */,
