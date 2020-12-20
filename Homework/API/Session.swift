@@ -12,7 +12,7 @@ class Session {
     static let shared = Session()
     
     var token: String = ""
-    var userID: Int = 0
+    var userID: String = "0"
     
     private init() { }
     
