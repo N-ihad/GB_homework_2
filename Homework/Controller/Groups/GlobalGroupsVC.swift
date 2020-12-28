@@ -10,9 +10,7 @@ import UIKit
 class GlobalGroupsVC: UIViewController {
     
     // MARK: - Properties
-    var groups: [Group] = [Group(name: "iOS dev", avatar: UIImage(named: "group")!),
-                           Group(name: "Science", avatar: UIImage(named: "group2")!),
-                           Group(name: "TED Talks", avatar: UIImage(named: "group4")!),]
+    var groups: [Group] = []
     var tableView = UITableView()
     
     // MARK: - Lifecycle

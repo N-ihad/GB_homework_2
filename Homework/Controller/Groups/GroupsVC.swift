@@ -10,7 +10,7 @@ import UIKit
 class GroupsVC: UIViewController {
     
     // MARK: - Properties
-    var groups: [GroupNew]?
+    var groups: [Group]?
     var tableView = UITableView()
     let searchController = UISearchController(searchResultsController: nil)
     var filteredData = [Group]()

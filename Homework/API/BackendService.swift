@@ -10,7 +10,7 @@ import Foundation
 class BackendService {
     static let shared = BackendService()
     var users = [User]()
-    var groups = [GroupNew]()
+    var groups = [Group]()
     
     // MARK: - Create
     
@@ -18,7 +18,7 @@ class BackendService {
         users.append(user)
     }
     
-    func addGroup(group: GroupNew) {
+    func addGroup(group: Group) {
         groups.append(group)
     }
     
@@ -32,7 +32,7 @@ class BackendService {
         }
     }
     
-    func fetchUserGroups(completion: @escaping ([GroupNew]) -> Void) {
+    func fetchUserGroups(completion: @escaping ([Group]) -> Void) {
         NetworkService.shared.getCurrentUserGroups { response in
             guard let res = response.value else { return }
             self.groups = res.response.items
@@ -40,7 +40,7 @@ class BackendService {
         }
     }
     
-    func fetchGroups(startingWithTitle queryString: String, completion: @escaping ([GroupNew]) -> Void) {
+    func fetchGroups(startingWithTitle queryString: String, completion: @escaping ([Group]) -> Void) {
         NetworkService.shared.getGroups(startingWithTitle: queryString) { response in
             guard let res = response.value else { return }
             completion(res.response.items)

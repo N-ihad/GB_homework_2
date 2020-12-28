@@ -8,7 +8,6 @@
 import UIKit
 
 let descr = "asdfasdfa ksdmflka msdlkfma lskdmfl akmsdlfkm alsdmfl amsdlkfm alskdmfl askmdlf masldkfm laskdmfl amsdlf masl asmdflk amsldkmf laskmdfl kamsdlkfm aslkdmf"
-private let group = Group(name: "iOS Dev", avatar: UIImage(named: "group")!)
 
 class NewsVC: UIViewController {
     
