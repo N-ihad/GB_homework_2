@@ -8,14 +8,14 @@
 import UIKit
 
 let descr = "asdfasdfa ksdmflka msdlkfma lskdmfl akmsdlfkm alsdmfl amsdlkfm alskdmfl askmdlf masldkfm laskdmfl amsdlf masl asmdflk amsldkmf laskmdfl kamsdlkfm aslkdmf"
-let user = User(name: "Apple Lune", avatar: UIImage(named: "testAvatar3")!, photos: [])
-let group = Group(name: "iOS Dev", avatar: UIImage(named: "group")!)
+private let group = Group(name: "iOS Dev", avatar: UIImage(named: "group")!)
 
 class NewsVC: UIViewController {
     
     // MARK: - Properties
-    var posts: [Post] = [Post(poster: user, description: descr, image: UIImage(named: "testAvatar1")!),
-                         Post(poster: group, description: descr, image: UIImage(named: "testAvatar")!),]
+//    var posts: [Post] = [Post(poster: user, description: descr, image: UIImage(named: "testAvatar1")!),
+//                         Post(poster: group, description: descr, image: UIImage(named: "testAvatar")!),]
+    var posts: [Post] = []
     var tableView = UITableView()
     
     

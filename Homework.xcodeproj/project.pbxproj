@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -25,8 +25,11 @@
 		20493C042562DF8D00AF4972 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20493C032562DF8D00AF4972 /* LoginVC.swift */; };
 		20493C072562EDC900AF4972 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20493C062562EDC900AF4972 /* Utilities.swift */; };
 		20493C12256310DB00AF4972 /* FriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20493C11256310DB00AF4972 /* FriendCell.swift */; };
-		20493C1A25631D9300AF4972 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20493C1925631D9300AF4972 /* User.swift */; };
-		20A4E266258F8664003D33BF /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A4E265258F8664003D33BF /* Session.swift */; };
+		204B2E8E259509D1005E33BA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204B2E8D259509D1005E33BA /* User.swift */; };
+		204B2E9125951ECF005E33BA /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204B2E9025951ECF005E33BA /* NetworkService.swift */; };
+		204B2E9725963F6E005E33BA /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204B2E9625963F6E005E33BA /* Photo.swift */; };
+		204B2E9A25964014005E33BA /* GroupNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204B2E9925964014005E33BA /* GroupNew.swift */; };
+		204B2EA1259758D2005E33BA /* BackendService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 204B2EA0259758D2005E33BA /* BackendService.swift */; };
 		20A4E269258F8781003D33BF /* WebLoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A4E268258F8781003D33BF /* WebLoginVC.swift */; };
 		20F990C2256C069C00718F03 /* FriendPhotosCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F990C1256C069C00718F03 /* FriendPhotosCell.swift */; };
 		20F990C8256D748500718F03 /* AnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F990C7256D748500718F03 /* AnimationController.swift */; };
@@ -55,8 +58,11 @@
 		20493C032562DF8D00AF4972 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		20493C062562EDC900AF4972 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		20493C11256310DB00AF4972 /* FriendCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendCell.swift; sourceTree = "<group>"; };
-		20493C1925631D9300AF4972 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		20A4E265258F8664003D33BF /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
+		204B2E8D259509D1005E33BA /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		204B2E9025951ECF005E33BA /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		204B2E9625963F6E005E33BA /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
+		204B2E9925964014005E33BA /* GroupNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupNew.swift; sourceTree = "<group>"; };
+		204B2EA0259758D2005E33BA /* BackendService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackendService.swift; sourceTree = "<group>"; };
 		20A4E268258F8781003D33BF /* WebLoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebLoginVC.swift; sourceTree = "<group>"; };
 		20F990C1256C069C00718F03 /* FriendPhotosCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendPhotosCell.swift; sourceTree = "<group>"; };
 		20F990C7256D748500718F03 /* AnimationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationController.swift; sourceTree = "<group>"; };
@@ -157,9 +163,11 @@
 		20493BF02562CFD600AF4972 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				20493C1925631D9300AF4972 /* User.swift */,
 				2001024125645F3F004855C0 /* Group.swift */,
 				203D198925646B1700C6FA39 /* Post.swift */,
+				204B2E8D259509D1005E33BA /* User.swift */,
+				204B2E9625963F6E005E33BA /* Photo.swift */,
+				204B2E9925964014005E33BA /* GroupNew.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -195,7 +203,8 @@
 		20F9C043258D339D00EB7F38 /* API */ = {
 			isa = PBXGroup;
 			children = (
-				20A4E265258F8664003D33BF /* Session.swift */,
+				204B2E9025951ECF005E33BA /* NetworkService.swift */,
+				204B2EA0259758D2005E33BA /* BackendService.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -214,7 +223,6 @@
 				B880B207FB6B538389E6C947 /* Pods-Homework.debug.xcconfig */,
 				5498EBA0B1B8115565F9DC08 /* Pods-Homework.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -331,6 +339,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				204B2E9725963F6E005E33BA /* Photo.swift in Sources */,
 				203D198D25646F1A00C6FA39 /* PostCell.swift in Sources */,
 				20493BD82562CFC500AF4972 /* AppDelegate.swift in Sources */,
 				20493BDA2562CFC500AF4972 /* SceneDelegate.swift in Sources */,
@@ -341,17 +350,19 @@
 				20493BFA2562D03100AF4972 /* GroupsVC.swift in Sources */,
 				20493C072562EDC900AF4972 /* Utilities.swift in Sources */,
 				20A4E269258F8781003D33BF /* WebLoginVC.swift in Sources */,
+				204B2E9125951ECF005E33BA /* NetworkService.swift in Sources */,
 				20F990C2256C069C00718F03 /* FriendPhotosCell.swift in Sources */,
 				2001024225645F3F004855C0 /* Group.swift in Sources */,
 				20493BFD2562D03900AF4972 /* NewsVC.swift in Sources */,
 				20493C002562DD1900AF4972 /* Extensions.swift in Sources */,
 				2001023925642D5B004855C0 /* FriendDetailsCollectionVC.swift in Sources */,
-				20A4E266258F8664003D33BF /* Session.swift in Sources */,
 				203D198A25646B1700C6FA39 /* Post.swift in Sources */,
 				20493C12256310DB00AF4972 /* FriendCell.swift in Sources */,
 				2001023F25645D65004855C0 /* GroupCell.swift in Sources */,
 				20F99115256FFEF300718F03 /* AnimationControllerForGroups.swift in Sources */,
-				20493C1A25631D9300AF4972 /* User.swift in Sources */,
+				204B2E9A25964014005E33BA /* GroupNew.swift in Sources */,
+				204B2E8E259509D1005E33BA /* User.swift in Sources */,
+				204B2EA1259758D2005E33BA /* BackendService.swift in Sources */,
 				203D19872564665E00C6FA39 /* GlobalGroupsVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

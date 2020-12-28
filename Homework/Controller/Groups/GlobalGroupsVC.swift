@@ -74,8 +74,8 @@ extension GlobalGroupsVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "GroupCell") as! GroupCell
-        let group = groups[indexPath.row]
-        cell.set(group: group)
+//        let group = groups[indexPath.row]
+//        cell.set(group: group)
         
         return cell
     }

@@ -19,7 +19,7 @@ class WebLoginVC: UIViewController {
                 urlComponents.host = "oauth.vk.com"
                 urlComponents.path = "/authorize"
                 urlComponents.queryItems = [
-                    URLQueryItem(name: "client_id", value: "7705068"),
+                    URLQueryItem(name: "client_id", value: "7712978"),
                     URLQueryItem(name: "display", value: "mobile"),
                     URLQueryItem(name: "redirect_uri", value: "https://oauth.vk.com/blank.html"),
                     URLQueryItem(name: "scope", value: "262150"),
@@ -82,8 +82,7 @@ extension WebLoginVC: WKUIDelegate, WKNavigationDelegate {
         let userID = params["user_id"]
         
         if let token = token, let userID = userID {
-            Session.shared.token = token
-            Session.shared.userID = userID
+            NetworkService.shared.setSession(with: token, and: userID)
         }
         
         let mainTabCtrl = MainTabController()

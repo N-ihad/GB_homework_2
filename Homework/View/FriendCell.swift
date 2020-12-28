@@ -119,24 +119,24 @@ class FriendCell: UITableViewCell {
     
     // MARK: - Helpers
     
-    func set(user: User) {
-        friendAvatarImageView.image = user.avatar
-        friendNameLabel.text = user.name
+    func set(username: String, userAvatarURL: URL) {
+        friendAvatarImageView.kf.setImage(with: userAvatarURL)
+        friendNameLabel.text = username
     }
     
     func configureUI() {
         friendAvatarView.addSubview(friendAvatarImageView)
         self.contentView.addSubview(friendAvatarView)
         self.contentView.addSubview(friendNameLabel)
-        self.contentView.addSubview(favouriteButton)
+//        self.contentView.addSubview(favouriteButton)
         self.contentView.addSubview(likeButton)
         self.contentView.addSubview(likeCounterLabel)
         friendAvatarView.centerY(inView: self, leftAnchor: leftAnchor, paddingLeft: 16)
         friendAvatarImageView.center(inView: friendAvatarView)
         friendNameLabel.centerY(inView: self, leftAnchor: friendAvatarView.rightAnchor, paddingLeft: 10)
-        likeCounterLabel.centerY(inView: self, rightAnchor: rightAnchor, paddingRight: 16)
+        likeCounterLabel.centerY(inView: self, rightAnchor: rightAnchor, paddingRight: 38)
         likeButton.centerY(inView: self, rightAnchor: likeCounterLabel.leftAnchor, paddingRight: 8)
-        favouriteButton.centerY(inView: self, rightAnchor: likeButton.leftAnchor, paddingRight: 8)
+//        favouriteButton.centerY(inView: self, rightAnchor: likeButton.leftAnchor, paddingRight: 8)
     }
     
     func configureGestures() {
