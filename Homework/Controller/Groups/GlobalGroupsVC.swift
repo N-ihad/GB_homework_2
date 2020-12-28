@@ -10,9 +10,7 @@ import UIKit
 class GlobalGroupsVC: UIViewController {
     
     // MARK: - Properties
-    var groups: [Group] = [Group(name: "iOS dev", avatar: UIImage(named: "group")!),
-                           Group(name: "Science", avatar: UIImage(named: "group2")!),
-                           Group(name: "TED Talks", avatar: UIImage(named: "group4")!),]
+    var groups: [Group] = []
     var tableView = UITableView()
     
     // MARK: - Lifecycle
@@ -74,8 +72,8 @@ extension GlobalGroupsVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "GroupCell") as! GroupCell
-        let group = groups[indexPath.row]
-        cell.set(group: group)
+//        let group = groups[indexPath.row]
+//        cell.set(group: group)
         
         return cell
     }

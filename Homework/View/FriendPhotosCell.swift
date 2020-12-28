@@ -31,6 +31,8 @@ class FriendPhotosCell: UICollectionViewCell {
     
     func configureUI() {
         contentView.addSubview(photoImageView)
-        photoImageView.pinTo(contentView)
+//        photoImageView.pinTo(contentView)
+        photoImageView.centerY(inView: contentView)
+        photoImageView.anchor(left: contentView.leftAnchor, right: contentView.rightAnchor, paddingLeft: 0, paddingRight: 0)
     }
 }

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class MainTabController: UITabBarController {
     
@@ -17,6 +18,7 @@ class MainTabController: UITabBarController {
         super.viewDidLoad()
 
         configureViewControllers()
+        testRequests()
     }
 
     // MARK: - Helpers
@@ -39,6 +41,12 @@ class MainTabController: UITabBarController {
         navCtrl.tabBarItem.image = image
         navCtrl.navigationBar.barTintColor = .white
         return navCtrl
+    }
+    
+    // MARK: - Requests
+    
+    func testRequests() {
+        
     }
     
 }
