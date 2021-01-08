@@ -6,28 +6,30 @@
 //
 
 import UIKit
-
-var friends: [User]!
-var indPath: IndexPath!
+import Kingfisher
 
 class FriendsVC: UIViewController {
+    
     // MARK: - Properties
-    //    var friends: [User] = [User(name: "Sarah Clark", avatar: UIImage(named: "testAvatar")!, photos: [UIImage(named: "friend1photo")!, UIImage(named: "friend1photo1")!, UIImage(named: "friend1photo2")!]),
-    //                           User(name: "Jakaria Joe", avatar: UIImage(named: "testAvatar1")!, photos: [UIImage(named: "friend2photo")!, UIImage(named: "friend2photo1")!, UIImage(named: "friend2photo2")!]),
-    //                           User(name: "Lock Json", avatar: UIImage(named: "testAvatar2")!, photos: [UIImage(named: "friend3photo2")!, UIImage(named: "friend3photo3")!, UIImage(named: "friend3photo4")!])]
     var tableView = UITableView()
     let searchController = UISearchController(searchResultsController: nil)
     var filteredData = [User]()
+    let loadingOverlay = Utilities().loadingView()
+    
+    var friends: [User] = []
+    var sortedFirstLetters: [String] = []
+    var sections: [[User]] = [[]]
     
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        friends = [User(name: "Sarah Clark", avatar: UIImage(named: "testAvatar")!, photos: [UIImage(named: "friend1photo")!, UIImage(named: "friend1photo1")!, UIImage(named: "friend1photo2")!]),
-                   User(name: "Jakaria Joe", avatar: UIImage(named: "testAvatar1")!, photos: [UIImage(named: "friend2photo")!, UIImage(named: "friend2photo1")!, UIImage(named: "friend2photo2")!]),
-                   User(name: "Lock Json", avatar: UIImage(named: "testAvatar2")!, photos: [UIImage(named: "friend3photo2")!, UIImage(named: "friend3photo3")!, UIImage(named: "friend3photo4")!])]
-        filteredData = User.allUsersSortedByName
+    
+        configureNavigationBar()
+        configureSearchBar()
+        configureTableView()
         configureUI()
+        fetchUserFriends()
     }
     
     // MARK: - Selectors
@@ -38,13 +40,32 @@ class FriendsVC: UIViewController {
     
     // MARK: - Helpers
     
+    func configureSections() {
+        let firstLetters = friends.map { $0.titleFirstLetter }
+        let uniqueFirstLetters = Array(Set(firstLetters))
+
+        sortedFirstLetters = uniqueFirstLetters.sorted()
+        sections = sortedFirstLetters.map { firstLetter in
+            return friends
+                .filter { $0.titleFirstLetter == firstLetter }
+                .sorted { $0.lastName < $1.lastName }
+        }
+    }
+    
+    func fetchUserFriends() {
+        startLoadingAnimation()
+        BackendService.shared.fetchUserFriends { users in
+            self.friends = users
+            self.configureSections()
+            self.tableView.reloadData()
+            self.stopLoadingAnimation()
+        }
+    }
+    
     func configureUI() {
-        
+        tableView.sectionIndexColor = .vkBlue
         transitioningDelegate = self
         navigationController?.delegate = self
-        configureNavigationBar()
-        configureSearchBar()
-        configureTableView()
     }
     
     func configureNavigationBar() {
@@ -73,34 +94,17 @@ class FriendsVC: UIViewController {
         searchController.searchBar.delegate = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.hidesNavigationBarDuringPresentation = false
+        searchController.searchBar.isUserInteractionEnabled = false
+        searchController.searchBar.placeholder = "Needs modifying for new data model"
     }
     
     func startLoadingAnimation() {
-        let lay = CAReplicatorLayer()
-        lay.frame = CGRect(x: -10, y: 0, width: 100, height: 10)
-        let circle = CALayer()
-        circle.frame = CGRect(x: -10, y: 0, width: 10, height: 10)
-        circle.backgroundColor = UIColor.gray.cgColor
-        circle.cornerRadius = 10 / 2
-        lay.addSublayer(circle)
-        lay.instanceCount = 3
-        lay.instanceTransform = CATransform3DMakeTranslation(20, 0, 0)
-        let anim = CABasicAnimation(keyPath: #keyPath(CALayer.opacity))
-        anim.fromValue = 1.0
-        anim.toValue = 0.2
-        anim.duration = 1
-        anim.repeatCount = .infinity
-        circle.add(anim, forKey: nil)
-        lay.instanceDelay = anim.duration / Double(lay.instanceCount)
-        
-        let v = UIView()
-        v.backgroundColor = .black
-        v.layer.addSublayer(lay)
-        view.addSubview(v)
-        v.center(inView: view)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
-            lay.removeFromSuperlayer()
-        }
+        view.addSubview(loadingOverlay)
+        loadingOverlay.pinTo(view)
+    }
+    
+    func stopLoadingAnimation() {
+        loadingOverlay.removeFromSuperview()
     }
 }
 
@@ -108,68 +112,77 @@ class FriendsVC: UIViewController {
 
 extension FriendsVC: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return searchController.searchBar.isFirstResponder ? 1 : User.alphabeticDictionaryOfUsersLastnames.keys.count
+//        return searchController.searchBar.isFirstResponder ? 1 : User.alphabeticDictionaryOfUsersLastnames.keys.count
+        return sections.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return searchController.searchBar.isFirstResponder ? filteredData.count : User.alphabeticDictionaryOfUsersLastnames.getUsersByIndex(key: section).count
+//        return searchController.searchBar.isFirstResponder ? filteredData.count : User.alphabeticDictionaryOfUsersLastnames.getUsersByIndex(key: section).count
+        return sections[section].count
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return searchController.searchBar.isFirstResponder ? "Found" : User.alphabeticDictionaryOfUsersLastnames.keys[section]
+//        return searchController.searchBar.isFirstResponder ? "Found" : User.alphabeticDictionaryOfUsersLastnames.keys[section]
+        guard !sortedFirstLetters.isEmpty else { return "Loading.." } // sortedFirstLetters is empty
+        return searchController.searchBar.isFirstResponder ? "Search is yet to be developed" : sortedFirstLetters[section]
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FriendCell") as! FriendCell
-        var user: User!
-        if searchController.searchBar.isFirstResponder {
-            user = filteredData[indexPath.row]
-        } else {
-            user = User.alphabeticDictionaryOfUsersLastnames.getUsersByIndex(key: indexPath.section)[indexPath.row]
-        }
-        cell.set(user: user)
+//        var user: User!
+//        if searchController.searchBar.isFirstResponder {
+//            user = filteredData[indexPath.row]
+//        } else {
+//            user = User.alphabeticDictionaryOfUsersLastnames.getUsersByIndex(key: indexPath.section)[indexPath.row]
+//        }
+        let user = sections[indexPath.section][indexPath.row]
+        cell.set(username: user.firstName + " " + user.lastName, userAvatarURL: URL(string: user.photo100) ?? URL(string: "")!)
         cell.delegate = self
-        indPath = indexPath
         
         return cell
     }
     
+    func sectionIndexTitles(for tableView: UITableView) -> [String]? {
+        return sortedFirstLetters
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let friendCellDetailsCollectionVC = FriendDetailsCollectionVC()
-        navigationController?.pushViewController(friendCellDetailsCollectionVC, animated: true)
-        tableView.deselectRow(at: indexPath, animated: true)
+        let friendDetailsCollectionVC = FriendDetailsCollectionVC()
+        friendDetailsCollectionVC.user = sections[indexPath.section][indexPath.row]
+        navigationController?.pushViewController(friendDetailsCollectionVC, animated: true)
+//        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 
 // MARK: - SearchController
 
 extension FriendsVC: UISearchBarDelegate {
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        filteredData = []
-        
-        if searchText == "" {
-            filteredData = User.allUsersSortedByName
-            tableView.reloadData()
-        } else {
-            for user in User.allUsersSortedByName {
-                if user.name.lowercased().contains(searchText.lowercased()) {
-                    filteredData.append(user)
-                }
-            }
-        }
-        
-        tableView.reloadData()
-    }
-    
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.endEditing(true)
-        filteredData = []
-        tableView.reloadData()
-    }
-    
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        filteredData = []
-    }
+//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+//        filteredData = []
+//
+//        if searchText == "" {
+//            filteredData = User.allUsersSortedByName
+//            tableView.reloadData()
+//        } else {
+//            for user in User.allUsersSortedByName {
+//                if user.name.lowercased().contains(searchText.lowercased()) {
+//                    filteredData.append(user)
+//                }
+//            }
+//        }
+//
+//        tableView.reloadData()
+//    }
+//
+//    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+//        searchBar.endEditing(true)
+//        filteredData = []
+//        tableView.reloadData()
+//    }
+//
+//    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+//        filteredData = []
+//    }
 }
 
 // MARK: - Friend Cell Delegate Methods

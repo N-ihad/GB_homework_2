@@ -10,17 +10,23 @@ import UIKit
 class GroupCell: UITableViewCell {
     // MARK: - Properties
     let groupImageView: UIImageView = {
-        let iv = UIImageView()
-        iv.contentMode = .scaleAspectFit
-        iv.clipsToBounds = true
-        iv.setDimensions(width: 48, height: 48)
-        iv.layer.cornerRadius = 48 / 2
-        iv.backgroundColor = .vkBlue
-        iv.isUserInteractionEnabled = true
-        return iv
+        let groupImageView = UIImageView()
+        groupImageView.contentMode = .scaleAspectFit
+        groupImageView.clipsToBounds = true
+        groupImageView.setDimensions(width: 48, height: 48)
+        groupImageView.layer.cornerRadius = 48 / 2
+        groupImageView.backgroundColor = .vkBlue
+        groupImageView.isUserInteractionEnabled = true
+        
+        return groupImageView
     }()
     
-    private let groupTitleLabel = UILabel()
+    private let groupTitleLabel: UILabel = {
+        let groupTitleLabel = UILabel()
+        groupTitleLabel.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width/2).isActive = true
+        
+        return groupTitleLabel
+    }()
     
     // MARK: - Lifecycle
     
@@ -53,8 +59,8 @@ class GroupCell: UITableViewCell {
         self.groupImageView.addGestureRecognizer(gesture)
     }
     
-    func set(group: Group) {
-        groupImageView.image = group.avatar
-        groupTitleLabel.text = group.name
+    func set(groupTitle: String, groupAvatarURL: URL) {
+        groupImageView.kf.setImage(with: groupAvatarURL)
+        groupTitleLabel.text = groupTitle
     }
 }

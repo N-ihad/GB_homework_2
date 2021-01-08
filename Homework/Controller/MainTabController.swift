@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class MainTabController: UITabBarController {
     
@@ -15,11 +16,21 @@ class MainTabController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if let documentsPath = FileManager.default.urls(for: .documentDirectory,
+                                                        in: .userDomainMask).first?.path {
+                print("Documents Directory: \(documentsPath)")
+        }
 
         configureViewControllers()
+        testRequests()
     }
 
     // MARK: - Helpers
+    
+    override var shouldAutorotate: Bool {
+        return false
+    }
     
     func configureViewControllers() {
         let friendsVC  = FriendsVC()
@@ -39,6 +50,12 @@ class MainTabController: UITabBarController {
         navCtrl.tabBarItem.image = image
         navCtrl.navigationBar.barTintColor = .white
         return navCtrl
+    }
+    
+    // MARK: - Requests
+    
+    func testRequests() {
+        
     }
     
 }

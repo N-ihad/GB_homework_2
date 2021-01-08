@@ -58,6 +58,7 @@ extension AnimationController: UIViewControllerAnimatedTransitioning {
             fromView.transform = CGAffineTransform(rotationAngle: .pi/2)
             toView.transform = CGAffineTransform.identity
         }) { _ in
+            fromView.transform = CGAffineTransform.identity
             transitionContext.completeTransition(true)
         }
     }
@@ -65,11 +66,12 @@ extension AnimationController: UIViewControllerAnimatedTransitioning {
     func dismissAnimation(with transitionContext: UIViewControllerContextTransitioning, fromView: UIView, toView: UIView) {
         fromView.setAnchorPoint(CGPoint(x: 0, y: 0))
         toView.setAnchorPoint(CGPoint(x: 0, y: 0))
+        
         toView.transform = CGAffineTransform(rotationAngle: .pi/2)
         
         let duration = self.transitionDuration(using: transitionContext)
         
-        UIView.animate(withDuration: duration, delay: 1, animations: {
+        UIView.animate(withDuration: duration, animations: {
             fromView.transform = CGAffineTransform(rotationAngle: -.pi/2)
             toView.transform = CGAffineTransform.identity
         }) { _ in

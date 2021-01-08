@@ -9,7 +9,21 @@ import UIKit
 
 private let reuseIdentifier = "Cell"
 
-class FriendDetailsCollectionVC: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class FriendDetailsCollectionVC: UICollectionViewController {
+    // MARK: - Properties
+    
+    var user: User? {
+        didSet {
+            guard let user = user else { return }
+            fetchPhotosOfUser(withID: String(user.id))
+            
+        }
+    }
+    var photos: [Photo]? {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +45,14 @@ class FriendDetailsCollectionVC: UICollectionViewController, UICollectionViewDel
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Helpers
+    
+    func fetchPhotosOfUser(withID userID: String) {
+        BackendService.shared.fetchPhotosOfUser(withID: userID) { photos in
+            self.photos = photos
+        }
+    }
+    
     func configureUI() {
         configureCollectionView()
     }
@@ -43,18 +65,15 @@ class FriendDetailsCollectionVC: UICollectionViewController, UICollectionViewDel
     // MARK: UICollectionViewDataSource
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return friends[0].photos.count
+        return photos?.count ?? 0
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! FriendPhotosCell
-        cell.photoImageView.image = friends[0].photos[indexPath.row]
+        guard let photos = photos else { return cell }
+        cell.photoImageView.kf.setImage(with: URL(string: photos[indexPath.row].photo604!))
         
         return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: view.frame.height)
     }
     
     override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
@@ -64,5 +83,12 @@ class FriendDetailsCollectionVC: UICollectionViewController, UICollectionViewDel
                 newCell.photoImageView.transform = CGAffineTransform(scaleX: 1, y: 1)
             })
         }
+    }
+}
+
+
+extension FriendDetailsCollectionVC: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: view.frame.width , height: view.frame.height - (view.safeAreaInsets.top + view.safeAreaInsets.bottom))
     }
 }
