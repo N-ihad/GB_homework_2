@@ -10,9 +10,7 @@ import UIKit
 class GroupsVC: UIViewController {
     
     // MARK: - Properties
-    var groups: [Group] = [Group(name: "KFC", avatar: UIImage(named: "group1")!),
-                           Group(name: "Something", avatar: UIImage(named: "group3")!),
-                           Group(name: "Travelling", avatar: UIImage(named: "group5")!)]
+    var groups: [Group]?
     var tableView = UITableView()
     let searchController = UISearchController(searchResultsController: nil)
     var filteredData = [Group]()
@@ -22,11 +20,11 @@ class GroupsVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        filteredData = groups
         transitioningDelegate = self
         navigationController?.delegate = self
         
         configureUI()
+        fetchUserGroups()
     }
     
     // MARK: - Selectors
@@ -36,11 +34,13 @@ class GroupsVC: UIViewController {
         navigationController?.pushViewController(globalGroupsVC, animated: true)
     }
     
-    @objc func goBack() {
-        print("DEBUG: triggered from left!!")
-    }
-    
     // MARK: - Helpers
+    func fetchUserGroups() {
+        BackendService.shared.fetchUserGroups { groups in
+            self.groups = groups
+            self.tableView.reloadData()
+        }
+    }
     
     func configureUI() {
         navigationItem.title = "Группы"
@@ -63,6 +63,7 @@ class GroupsVC: UIViewController {
         tableView.rowHeight = 80
         tableView.register(GroupCell.self, forCellReuseIdentifier: "GroupCell")
         tableView.pinTo(view)
+        tableView.frame = view.frame
     }
     
     func configureSearchBar() {
@@ -70,6 +71,8 @@ class GroupsVC: UIViewController {
         navigationItem.hidesSearchBarWhenScrolling = false
         searchController.searchBar.delegate = self
         searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.isUserInteractionEnabled = false
+        searchController.searchBar.placeholder = "Needs modifying for new data model"
     }
 }
 
@@ -80,14 +83,14 @@ extension GroupsVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filteredData.count
+        return groups?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "GroupCell") as! GroupCell
-        
-        let group = filteredData[indexPath.row]
-        cell.set(group: group)
+        guard let groups = groups else { return cell }
+        let group = groups[indexPath.row]
+        cell.set(groupTitle: group.name, groupAvatarURL: URL(string: group.photo50) ?? URL(string: "")!)
         
         return cell
     }
@@ -98,40 +101,46 @@ extension GroupsVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete && !searchController.searchBar.isFirstResponder {
-            self.groups.remove(at: indexPath.row)
-            self.filteredData.remove(at: indexPath.row)
+            self.groups?.remove(at: indexPath.row)
             self.tableView.deleteRows(at: [indexPath], with: .automatic)
         }
     }
 }
 
 extension GroupsVC: UISearchBarDelegate {
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        filteredData = []
-        
-        if searchText == "" {
-            filteredData = groups
-            tableView.reloadData()
-        } else {
-            for group in groups {
-                if group.name.lowercased().contains(searchText.lowercased()) {
-                    filteredData.append(group)
-                }
-            }
-        }
-        
-        tableView.reloadData()
-    }
-    
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.endEditing(true)
-        filteredData = groups
-        tableView.reloadData()
-    }
-    
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        filteredData = groups
-    }
+//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+//        filteredData = []
+//
+//        if searchText == "" {
+//            filteredData = groups
+//            tableView.reloadData()
+//        } else {
+//            BackendService.shared.fetchGroups(startingWithTitle: searchText) { groups in
+//                print("*** BEFORE PRINT ***")
+//                groups.forEach { group in
+//                    print(group.name)
+//                }
+//                print("*** AFTER PRINT ***")
+//            }
+//            for group in groups {
+//                if group.name.lowercased().contains(searchText.lowercased()) {
+//                    filteredData.append(group)
+//                }
+//            }
+//        }
+//
+//        tableView.reloadData()
+//    }
+//
+//    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+//        searchBar.endEditing(true)
+//        filteredData = groups
+//        tableView.reloadData()
+//    }
+//
+//    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+//        filteredData = groups
+//    }
 }
 
 extension GroupsVC: UIViewControllerTransitioningDelegate, UINavigationControllerDelegate {

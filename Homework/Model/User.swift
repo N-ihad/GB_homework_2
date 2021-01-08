@@ -1,42 +1,51 @@
 //
-//  User.swift
-//  Eigth homework task
+//  UserNew.swift
+//  Homework
 //
-//  Created by Nihad on 11/16/20.
+//  Created by Nihad on 12/24/20.
 //
 
-import UIKit
+import Foundation
+import RealmSwift
 
-class User: PosterProtocol {
-    struct alphabeticDictionaryOfUsersLastnames {
-        static var dict = [String: [User]]()
-        static var keys = Array(dict.keys)
-        
-        static func getUsersByIndex(key: Int) -> [User] {
-            return dict[keys[key]]!
-        }
-    }
-    var name: String
-    var avatar: UIImage
-    var photos: [UIImage]
-    static var allUsersSortedByName = [User]()
-    
-    init(name: String, avatar: UIImage, photos: [UIImage]) {
-        self.name = name
-        self.avatar = avatar
-        self.photos = photos
-        
-        User.allUsersSortedByName.append(self)
-        User.allUsersSortedByName.sort(by: { $0.name > $1.name })
-        User.updateDictionaryOfLastnames(with: self)
-        User.alphabeticDictionaryOfUsersLastnames.keys = Array(User.alphabeticDictionaryOfUsersLastnames.dict.keys).sorted(by: <)
-    }
-    
-    static func updateDictionaryOfLastnames(with user: User) {
-        let fullname = user.name.components(separatedBy: " ")
-        let lastname = fullname[1]
-        let firstLetterOfLastName = lastname[0]
-        alphabeticDictionaryOfUsersLastnames.dict[firstLetterOfLastName, default: [User]()].append(user)
+class UsersResponse: Decodable {
+    let response: Users
+}
+
+class Users: Decodable {
+    let count: Int
+    let items: [User]
+
+    enum CodingKeys: String, CodingKey {
+        case count = "count"
+        case items = "items"
     }
 }
 
+
+class User: Object, Decodable {
+    @objc dynamic var firstName: String
+    @objc dynamic var id: Int
+    @objc dynamic var lastName: String
+    @objc dynamic var photo50, photo100, photo200_Orig: String
+    @objc dynamic var trackCode: String
+    @objc dynamic var deactivated: String?
+
+    enum CodingKeys: String, CodingKey {
+        case firstName = "first_name"
+        case id
+        case lastName = "last_name"
+        case photo50 = "photo_50"
+        case photo100 = "photo_100"
+        case photo200_Orig = "photo_200_orig"
+        case trackCode = "track_code"
+        case deactivated
+    }
+}
+
+
+extension User {
+    @objc dynamic var titleFirstLetter: String {
+        return String(self.lastName[self.lastName.startIndex]).uppercased()
+    }
+}

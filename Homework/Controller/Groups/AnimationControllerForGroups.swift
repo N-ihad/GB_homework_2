@@ -65,7 +65,6 @@ extension AnimationControllerForGroups: UIViewControllerAnimatedTransitioning {
     func dismissAnimation(with transitionContext: UIViewControllerContextTransitioning, fromView: UIView, toView: UIView) {
         fromView.alpha = 1
         toView.alpha = 0
-
         let duration = transitionDuration(using: transitionContext)
 
         UIView.animate(withDuration: duration, animations: {

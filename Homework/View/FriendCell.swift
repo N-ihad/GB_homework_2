@@ -90,6 +90,20 @@ class FriendCell: UITableViewCell {
     
     @objc func handleFavouriteTapped(_ sender: UIButton) {
         sender.isSelected = !sender.isSelected
+        
+        if sender.isSelected {
+            let offset = CGPoint(x: -self.frame.maxX, y: 0)
+            let x: CGFloat = 0, y: CGFloat = 0
+            sender.transform = CGAffineTransform(translationX: offset.x + x, y: offset.y + y)
+            sender.isHidden = false
+            UIView.animate(
+                withDuration: 1, delay: 0, usingSpringWithDamping: 0.47, initialSpringVelocity: 3,
+                options: .curveEaseOut, animations: {
+                    sender.transform = .identity
+                    sender.alpha = 1
+            })
+        }
+        
         delegate?.handleFavouriteTapped(self)
     }
     
@@ -114,14 +128,15 @@ class FriendCell: UITableViewCell {
         } else {
             likeCounterLabel.text = String(Int(likeCounterLabel.text!)! - 1)
         }
+        
         delegate?.handleLikeTapped(self)
     }
     
     // MARK: - Helpers
     
-    func set(user: User) {
-        friendAvatarImageView.image = user.avatar
-        friendNameLabel.text = user.name
+    func set(username: String, userAvatarURL: URL) {
+        friendAvatarImageView.kf.setImage(with: userAvatarURL)
+        friendNameLabel.text = username
     }
     
     func configureUI() {
@@ -129,14 +144,14 @@ class FriendCell: UITableViewCell {
         self.contentView.addSubview(friendAvatarView)
         self.contentView.addSubview(friendNameLabel)
         self.contentView.addSubview(favouriteButton)
-        self.contentView.addSubview(likeButton)
-        self.contentView.addSubview(likeCounterLabel)
+//        self.contentView.addSubview(likeButton)
+//        self.contentView.addSubview(likeCounterLabel)
         friendAvatarView.centerY(inView: self, leftAnchor: leftAnchor, paddingLeft: 16)
         friendAvatarImageView.center(inView: friendAvatarView)
         friendNameLabel.centerY(inView: self, leftAnchor: friendAvatarView.rightAnchor, paddingLeft: 10)
-        likeCounterLabel.centerY(inView: self, rightAnchor: rightAnchor, paddingRight: 16)
-        likeButton.centerY(inView: self, rightAnchor: likeCounterLabel.leftAnchor, paddingRight: 8)
-        favouriteButton.centerY(inView: self, rightAnchor: likeButton.leftAnchor, paddingRight: 8)
+//        likeCounterLabel.centerY(inView: self, rightAnchor: rightAnchor, paddingRight: 38)
+//        likeButton.centerY(inView: self, rightAnchor: likeCounterLabel.leftAnchor, paddingRight: 8)
+        favouriteButton.centerY(inView: self, rightAnchor: rightAnchor, paddingRight: 26)
     }
     
     func configureGestures() {
