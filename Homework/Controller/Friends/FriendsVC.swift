@@ -59,6 +59,7 @@ class FriendsVC: UIViewController {
             self.configureSections()
             self.tableView.reloadData()
             self.stopLoadingAnimation()
+//            BackendService.shared.deleteRealmDB()
         }
     }
     

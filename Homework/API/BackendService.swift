@@ -92,7 +92,14 @@ class BackendService {
         }
     }
     
+    // MARK: - Delete all realm objects
     
+    func deleteRealmDB() {
+        let realm = try! Realm(configuration: Realm.Configuration.init(deleteRealmIfMigrationNeeded: true))
+        try! realm.write {
+          realm.deleteAll()
+        }
+    }
     
     private init() { }
 }

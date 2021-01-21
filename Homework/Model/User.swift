@@ -30,6 +30,7 @@ class User: Object, Decodable {
     @objc dynamic var photo50, photo100, photo200_Orig: String
     @objc dynamic var trackCode: String
     @objc dynamic var deactivated: String?
+    let photos = List<Photo>()
 
     enum CodingKeys: String, CodingKey {
         case firstName = "first_name"
