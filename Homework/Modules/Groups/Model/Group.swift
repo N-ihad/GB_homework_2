@@ -30,6 +30,10 @@ class Group: Object, Decodable {
     @objc dynamic var isAdmin, isMember, isAdvertiser: Int
     @objc dynamic var photo50, photo100, photo200: String
 
+    override class func primaryKey() -> String? {
+        return "id"
+    }
+    
     enum CodingKeys: String, CodingKey {
         case id, name
         case screenName = "screen_name"

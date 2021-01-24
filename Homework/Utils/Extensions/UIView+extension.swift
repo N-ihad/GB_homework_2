@@ -1,8 +1,8 @@
 //
-//  Extensions.swift
-//  Eigth homework task
+//  UIView+extension.swift
+//  Homework
 //
-//  Created by Nihad on 11/16/20.
+//  Created by Nihad on 1/24/21.
 //
 
 import UIKit
@@ -86,11 +86,7 @@ extension UIView {
         anchor(top: view.topAnchor, left: view.leftAnchor,
                bottom: view.bottomAnchor, right: view.rightAnchor)
     }
-}
-
-// MARK: - UIView
-
-extension UIView {
+    
     func dropShadow() {
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowOpacity = 1
@@ -149,85 +145,5 @@ extension UIView {
         
         layer.position = position
         layer.anchorPoint = point
-    }
-}
-
-// MARK: - UIColor
-
-extension UIColor {
-    static func rgb(red: CGFloat, green: CGFloat, blue: CGFloat) -> UIColor {
-        return UIColor(red: red/255, green: green/255, blue: blue/255, alpha: 1)
-    }
-    
-    static func rgba(red: CGFloat, green: CGFloat, blue: CGFloat, alpha: CGFloat) -> UIColor {
-        return UIColor(red: red/255, green: green/255, blue: blue/255, alpha: alpha)
-    }
-    
-    static let vkBlue = UIColor.rgb(red: 60, green: 98, blue: 153)
-}
-
-// MARK: - UIImage
-
-extension UIImage {
-    static func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage {
-        let size = image.size
-        
-        let widthRatio  = targetSize.width  / size.width
-        let heightRatio = targetSize.height / size.height
-        
-        // Figure out what our orientation is, and use that to form the rectangle
-        var newSize: CGSize
-        if(widthRatio > heightRatio) {
-            newSize = CGSize(width: size.width * heightRatio, height: size.height * heightRatio)
-        } else {
-            newSize = CGSize(width: size.width * widthRatio,  height: size.height * widthRatio)
-        }
-        
-        // This is the rect that we've calculated out and this is what is actually used below
-        let rect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height)
-        
-        // Actually do the resizing to the rect using the ImageContext stuff
-        UIGraphicsBeginImageContextWithOptions(newSize, false, 1.0)
-        image.draw(in: rect)
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        return newImage!
-    }
-    
-    func imageWith(newSize: CGSize, color: UIColor) -> UIImage {
-        let renderer = UIGraphicsImageRenderer(size: newSize)
-        var image = renderer.image { _ in
-            self.draw(in: CGRect.init(origin: CGPoint.zero, size: newSize))
-        }
-        image = image.withTintColor(color)
-        return image.withRenderingMode(self.renderingMode)
-    }
-}
-
-extension String {
-    
-    var length: Int {
-        return count
-    }
-    
-    subscript (i: Int) -> String {
-        return self[i ..< i + 1]
-    }
-    
-    func substring(fromIndex: Int) -> String {
-        return self[min(fromIndex, length) ..< length]
-    }
-    
-    func substring(toIndex: Int) -> String {
-        return self[0 ..< max(0, toIndex)]
-    }
-    
-    subscript (r: Range<Int>) -> String {
-        let range = Range(uncheckedBounds: (lower: max(0, min(length, r.lowerBound)),
-                                            upper: min(length, max(0, r.upperBound))))
-        let start = index(startIndex, offsetBy: range.lowerBound)
-        let end = index(start, offsetBy: range.upperBound - range.lowerBound)
-        return String(self[start ..< end])
     }
 }

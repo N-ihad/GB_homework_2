@@ -8,9 +8,12 @@
 import UIKit
 import Kingfisher
 
-class FriendsVC: UIViewController {
+class FriendsViewController: UIViewController {
     
     // MARK: - Properties
+    
+    var refreshControl = UIRefreshControl()
+    
     var tableView = UITableView()
     let searchController = UISearchController(searchResultsController: nil)
     var filteredData = [User]()
@@ -29,6 +32,7 @@ class FriendsVC: UIViewController {
         configureSearchBar()
         configureTableView()
         configureUI()
+        configureRefreshControl()
         fetchUserFriends()
     }
     
@@ -38,7 +42,22 @@ class FriendsVC: UIViewController {
         startLoadingAnimation()
     }
     
+    @objc func updateTableViewData() {
+        BackendService.shared.getUserFriends(update: true) { friends in
+            self.friends = friends
+            self.configureSections()
+            self.tableView.reloadData()
+            self.refreshControl.endRefreshing()
+        }
+    }
+    
     // MARK: - Helpers
+    
+    func configureRefreshControl() {
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.addTarget(self, action: #selector(updateTableViewData), for: .valueChanged)
+        tableView.addSubview(refreshControl)
+    }
     
     func configureSections() {
         let firstLetters = friends.map { $0.titleFirstLetter }
@@ -54,12 +73,11 @@ class FriendsVC: UIViewController {
     
     func fetchUserFriends() {
         startLoadingAnimation()
-        BackendService.shared.fetchUserFriends { users in
-            self.friends = users
+        BackendService.shared.getUserFriends(update: false) { friends in
+            self.friends = friends
             self.configureSections()
             self.tableView.reloadData()
             self.stopLoadingAnimation()
-//            BackendService.shared.deleteRealmDB()
         }
     }
     
@@ -111,7 +129,7 @@ class FriendsVC: UIViewController {
 
 // MARK: - TableView
 
-extension FriendsVC: UITableViewDelegate, UITableViewDataSource {
+extension FriendsViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
 //        return searchController.searchBar.isFirstResponder ? 1 : User.alphabeticDictionaryOfUsersLastnames.keys.count
         return sections.count
@@ -148,16 +166,16 @@ extension FriendsVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let friendDetailsCollectionVC = FriendDetailsCollectionVC()
+        let friendDetailsCollectionVC = FriendPhotosCollectionViewController()
         friendDetailsCollectionVC.user = sections[indexPath.section][indexPath.row]
         navigationController?.pushViewController(friendDetailsCollectionVC, animated: true)
-//        tableView.deselectRow(at: indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 
 // MARK: - SearchController
 
-extension FriendsVC: UISearchBarDelegate {
+extension FriendsViewController: UISearchBarDelegate {
 //    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
 //        filteredData = []
 //
@@ -188,7 +206,7 @@ extension FriendsVC: UISearchBarDelegate {
 
 // MARK: - Friend Cell Delegate Methods
 
-extension FriendsVC: FriendCellDelegate {
+extension FriendsViewController: FriendCellDelegate {
     func handleLikeTapped(_ cell: FriendCell) {
         
     }
@@ -204,7 +222,7 @@ extension FriendsVC: FriendCellDelegate {
 
 // MARK: - Transition
 
-extension FriendsVC: UIViewControllerTransitioningDelegate, UINavigationControllerDelegate {
+extension FriendsViewController: UIViewControllerTransitioningDelegate, UINavigationControllerDelegate {
     func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         switch operation {
         case .push:

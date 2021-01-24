@@ -24,13 +24,14 @@ class Users: Decodable {
 
 
 class User: Object, Decodable {
-    @objc dynamic var firstName: String
-    @objc dynamic var id: Int
-    @objc dynamic var lastName: String
-    @objc dynamic var photo50, photo100, photo200_Orig: String
-    @objc dynamic var trackCode: String
-    @objc dynamic var deactivated: String?
+    @objc dynamic var firstName: String = ""
+    @objc dynamic var id: Int = 0
+    @objc dynamic var lastName: String = ""
+    @objc dynamic var photo50 = "", photo100 = "", photo200_Orig = ""
+    @objc dynamic var trackCode: String = ""
+    @objc dynamic var deactivated: String? = ""
     let photos = List<Photo>()
+    
 
     enum CodingKeys: String, CodingKey {
         case firstName = "first_name"
@@ -41,6 +42,10 @@ class User: Object, Decodable {
         case photo200_Orig = "photo_200_orig"
         case trackCode = "track_code"
         case deactivated
+    }
+    
+    override class func primaryKey() -> String? {
+        return "id"
     }
 }
 

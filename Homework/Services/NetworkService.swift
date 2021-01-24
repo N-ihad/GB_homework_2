@@ -12,6 +12,10 @@ import SwiftyJSON
 
 class NetworkService {
     static let shared = NetworkService()
+    var loggedUserID: String {
+        return session.userID
+    }
+    
     private var session = Session() {
         didSet {
             defaultParameters["user_id"] = session.userID
@@ -33,11 +37,7 @@ class NetworkService {
     
     // MARK: - Read
     
-    func getCurrentUserID() -> String {
-        return session.userID
-    }
-    
-    func getCurrentUserFriends(completion: @escaping ((DataResponse<UsersResponse, AFError>) -> Void)) {
+    func getUserFriends(completion: @escaping ((DataResponse<UsersResponse, AFError>) -> Void)) {
         var params = defaultParameters
         params["fields"] = "photo_50,photo_100,photo_200_orig"
         AF.request(API_URLs.getFriends, parameters: params).responseDecodable(of: UsersResponse.self, completionHandler: completion)
@@ -67,7 +67,7 @@ class NetworkService {
         AF.request(API_URLs.getPhotosOfUser, parameters: params).responseDecodable(of: PhotosResponse.self, completionHandler: completion)
     }
     
-    func getCurrentUserGroups(completion: @escaping ((DataResponse<GroupsResponse, AFError>) -> Void)) {
+    func getUserGroups(completion: @escaping ((DataResponse<GroupsResponse, AFError>) -> Void)) {
         var params = defaultParameters
         params["extended"] = 1
         AF.request(API_URLs.getGroups, parameters: params).responseDecodable(of: GroupsResponse.self, completionHandler: completion)

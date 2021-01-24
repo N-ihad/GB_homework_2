@@ -8,7 +8,7 @@
 import UIKit
 
 
-class LoginVC: UIViewController {
+class LoginViewController: UIViewController {
     // MARK: - Properties
     
     override var preferredStatusBarStyle: UIStatusBarStyle {

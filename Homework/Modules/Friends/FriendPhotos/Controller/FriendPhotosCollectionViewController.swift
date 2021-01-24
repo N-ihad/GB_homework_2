@@ -9,14 +9,13 @@ import UIKit
 
 private let reuseIdentifier = "Cell"
 
-class FriendDetailsCollectionVC: UICollectionViewController {
+class FriendPhotosCollectionViewController: UICollectionViewController {
     // MARK: - Properties
     
     var user: User? {
         didSet {
             guard let user = user else { return }
             fetchPhotosOfUser(withID: String(user.id))
-            
         }
     }
     var photos: [Photo]? {
@@ -48,7 +47,7 @@ class FriendDetailsCollectionVC: UICollectionViewController {
     // MARK: - Helpers
     
     func fetchPhotosOfUser(withID userID: String) {
-        BackendService.shared.fetchPhotosOfUser(withID: userID) { photos in
+        BackendService.shared.getPhotosOfUser(withID: user!.id) { photos in
             self.photos = photos
         }
     }
@@ -87,7 +86,7 @@ class FriendDetailsCollectionVC: UICollectionViewController {
 }
 
 
-extension FriendDetailsCollectionVC: UICollectionViewDelegateFlowLayout {
+extension FriendPhotosCollectionViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: view.frame.width , height: view.frame.height - (view.safeAreaInsets.top + view.safeAreaInsets.bottom))
     }

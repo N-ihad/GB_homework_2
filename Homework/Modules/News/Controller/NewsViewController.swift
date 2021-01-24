@@ -9,7 +9,7 @@ import UIKit
 
 let descr = "asdfasdfa ksdmflka msdlkfma lskdmfl akmsdlfkm alsdmfl amsdlkfm alskdmfl askmdlf masldkfm laskdmfl amsdlf masl asmdflk amsldkmf laskmdfl kamsdlkfm aslkdmf"
 
-class NewsVC: UIViewController {
+class NewsViewController: UIViewController {
     
     // MARK: - Properties
 //    var posts: [Post] = [Post(poster: user, description: descr, image: UIImage(named: "testAvatar1")!),
@@ -46,7 +46,7 @@ class NewsVC: UIViewController {
     }
 }
 
-extension NewsVC: UITableViewDelegate, UITableViewDataSource {
+extension NewsViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }

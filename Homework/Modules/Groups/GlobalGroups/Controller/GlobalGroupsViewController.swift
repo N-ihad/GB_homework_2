@@ -7,7 +7,7 @@
 
 import UIKit
 
-class GlobalGroupsVC: UIViewController {
+class GlobalGroupsViewController: UIViewController {
     
     // MARK: - Properties
     var groups: [Group] = []
@@ -61,7 +61,7 @@ class GlobalGroupsVC: UIViewController {
 }
 
 
-extension GlobalGroupsVC: UITableViewDelegate, UITableViewDataSource {
+extension GlobalGroupsViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }

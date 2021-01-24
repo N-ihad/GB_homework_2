@@ -7,7 +7,7 @@
 
 import UIKit
 
-class GroupsVC: UIViewController {
+class GroupsViewController: UIViewController {
     
     // MARK: - Properties
     var groups: [Group]?
@@ -30,13 +30,13 @@ class GroupsVC: UIViewController {
     // MARK: - Selectors
     
     @objc func handleGlobalTapped() {
-        let globalGroupsVC = GlobalGroupsVC()
+        let globalGroupsVC = GlobalGroupsViewController()
         navigationController?.pushViewController(globalGroupsVC, animated: true)
     }
     
     // MARK: - Helpers
     func fetchUserGroups() {
-        BackendService.shared.fetchUserGroups { groups in
+        BackendService.shared.getUserGroups { groups in
             self.groups = groups
             self.tableView.reloadData()
         }
@@ -77,7 +77,7 @@ class GroupsVC: UIViewController {
 }
 
 
-extension GroupsVC: UITableViewDelegate, UITableViewDataSource {
+extension GroupsViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -107,7 +107,7 @@ extension GroupsVC: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-extension GroupsVC: UISearchBarDelegate {
+extension GroupsViewController: UISearchBarDelegate {
 //    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
 //        filteredData = []
 //
@@ -143,7 +143,7 @@ extension GroupsVC: UISearchBarDelegate {
 //    }
 }
 
-extension GroupsVC: UIViewControllerTransitioningDelegate, UINavigationControllerDelegate {
+extension GroupsViewController: UIViewControllerTransitioningDelegate, UINavigationControllerDelegate {
     func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         switch operation {
         case .pop:

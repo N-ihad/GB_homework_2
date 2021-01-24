@@ -8,7 +8,7 @@
 import UIKit
 import WebKit
 
-class WebLoginVC: UIViewController {
+class WebLoginViewController: UIViewController {
     
     // MARK: - Properties
     
@@ -57,7 +57,7 @@ class WebLoginVC: UIViewController {
     }
 }
 
-extension WebLoginVC: WKUIDelegate, WKNavigationDelegate {
+extension WebLoginViewController: WKUIDelegate, WKNavigationDelegate {
     func webView(_ webView: WKWebView,
                  decidePolicyFor navigationResponse: WKNavigationResponse,
                  decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
