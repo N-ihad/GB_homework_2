@@ -10,10 +10,15 @@ import UIKit
 class GroupsViewController: UIViewController {
     
     // MARK: - Properties
-    var groups: [Group]?
+    var groups: [Group]? {
+        didSet {
+            self.tableView.reloadData()
+        }
+    }
     var tableView = UITableView()
     let searchController = UISearchController(searchResultsController: nil)
     var filteredData = [Group]()
+    var token: Any?
     
     // MARK: - Lifecycle
     
@@ -25,6 +30,7 @@ class GroupsViewController: UIViewController {
         
         configureUI()
         fetchUserGroups()
+        subscribeToRealmDBChanges()
     }
     
     // MARK: - Selectors
@@ -35,10 +41,26 @@ class GroupsViewController: UIViewController {
     }
     
     // MARK: - Helpers
+    
+    func subscribeToRealmDBChanges() {
+        token = BackendService.shared.realm.objects(Group.self).observe {  (changes) in
+                    switch changes {
+                    case let .initial(results):
+                        print("DEBUG: results - \(Array(results))")
+                        self.groups = Array(results)
+                    case let .update(results, _, _, _):
+                        print("DEBUG: results (update) - \(results)")
+                        self.groups = Array(results)
+                    case .error(let error):
+                        print("DEBUG: error - \(error)")
+                    }
+                    print("DEBUG: Users data has been changed")
+                }
+    }
+    
     func fetchUserGroups() {
         BackendService.shared.getUserGroups { groups in
             self.groups = groups
-            self.tableView.reloadData()
         }
     }
     

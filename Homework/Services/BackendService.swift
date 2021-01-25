@@ -10,7 +10,7 @@ import RealmSwift
 
 class BackendService {
     static let shared = BackendService()
-    private var realm: Realm!
+    var realm: Realm!
     
     private init() {
         do {
@@ -94,6 +94,20 @@ class BackendService {
             completion(Array(realm.objects(Group.self)))
         }
     }
+    
+//    func notifyIfUsersInRalmDBChanged(completion: @escaping () -> Void) {
+//        _ = realm.objects(User.self).observe {  (changes: RealmCollectionChange) in
+//                    switch changes {
+//                    case .initial(let results):
+//                        print("DEBUG: results - \(results)")
+//                    case let .update(results, deletions, insertions, modifications):
+//                        print("DEBUG: results, deletions, insertions, modifications - \(results), \(deletions), \(insertions), \(modifications)")
+//                    case .error(let error):
+//                        print("DEBUG: error - \(error)")
+//                    }
+//                    print("Users data has been changed")
+//                }
+//    }
     
     
     

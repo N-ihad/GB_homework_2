@@ -13,13 +13,22 @@ class FriendsViewController: UIViewController {
     // MARK: - Properties
     
     var refreshControl = UIRefreshControl()
+    var token: Any?
     
     var tableView = UITableView()
     let searchController = UISearchController(searchResultsController: nil)
     var filteredData = [User]()
     let loadingOverlay = Utilities().loadingView()
     
-    var friends: [User] = []
+    var friends: [User] = [] {
+        didSet {
+            DispatchQueue.main.async {
+                self.configureSections()
+                self.tableView.reloadData()
+                self.stopLoadingAnimation()
+            }
+        }
+    }
     var sortedFirstLetters: [String] = []
     var sections: [[User]] = [[]]
     
@@ -34,24 +43,37 @@ class FriendsViewController: UIViewController {
         configureUI()
         configureRefreshControl()
         fetchUserFriends()
+        subscribeToRealmDBChanges()
     }
     
     // MARK: - Selectors
     
-    @objc func handleLoadingTapped(_ sender: UIBarButtonItem) {
-        startLoadingAnimation()
-    }
-    
     @objc func updateTableViewData() {
         BackendService.shared.getUserFriends(update: true) { friends in
             self.friends = friends
-            self.configureSections()
-            self.tableView.reloadData()
-            self.refreshControl.endRefreshing()
+            DispatchQueue.main.async {
+                self.refreshControl.endRefreshing()
+            }
         }
     }
     
     // MARK: - Helpers
+    
+    func subscribeToRealmDBChanges() {
+        token = BackendService.shared.realm.objects(User.self).observe {  (changes) in
+                    switch changes {
+                    case let .initial(results):
+                        print("DEBUG: results - \(Array(results))")
+                        self.friends = Array(results)
+                    case let .update(results, _, _, _):
+                        print("DEBUG: results (update) - \(results)")
+                        self.friends = Array(results)
+                    case .error(let error):
+                        print("DEBUG: error - \(error)")
+                    }
+                    print("DEBUG: Users data has been changed")
+                }
+    }
     
     func configureRefreshControl() {
         refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
@@ -94,7 +116,6 @@ class FriendsViewController: UIViewController {
         imageView.frame = titleView.bounds
         titleView.addSubview(imageView)
         navigationItem.titleView = titleView
-        navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "dot.circle.and.cursorarrow"), style: .plain, target: self, action: #selector(handleLoadingTapped))
         navigationController?.navigationBar.tintColor = .vkBlue
     }
     
