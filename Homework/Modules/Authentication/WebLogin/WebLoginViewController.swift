@@ -7,6 +7,7 @@
 
 import UIKit
 import WebKit
+import SnapKit
 
 class WebLoginViewController: UIViewController {
     
@@ -48,7 +49,9 @@ class WebLoginViewController: UIViewController {
     
     func configureSubviews() {
         view.addSubview(webView)
-        webView.pinTo(view)
+        webView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
     }
     
     func configureWebView() {

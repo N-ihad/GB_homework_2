@@ -94,29 +94,4 @@ class BackendService {
             completion(Array(realm.objects(Group.self)))
         }
     }
-    
-//    func notifyIfUsersInRalmDBChanged(completion: @escaping () -> Void) {
-//        _ = realm.objects(User.self).observe {  (changes: RealmCollectionChange) in
-//                    switch changes {
-//                    case .initial(let results):
-//                        print("DEBUG: results - \(results)")
-//                    case let .update(results, deletions, insertions, modifications):
-//                        print("DEBUG: results, deletions, insertions, modifications - \(results), \(deletions), \(insertions), \(modifications)")
-//                    case .error(let error):
-//                        print("DEBUG: error - \(error)")
-//                    }
-//                    print("Users data has been changed")
-//                }
-//    }
-    
-    
-    
-    // MARK: - DELETE
-    
-//    func deleteRealmDB() {
-//        let realm = try! Realm(configuration: Realm.Configuration.init(deleteRealmIfMigrationNeeded: true))
-//        try! realm.write {
-//          realm.deleteAll()
-//        }
-//    }
 }

@@ -7,18 +7,15 @@
 
 import UIKit
 
-protocol PosterProtocol {
-    var avatar: UIImage { get set }
-    var name: String { get set }
-}
-
 class Post {
-    var poster: PosterProtocol
+    var authorName: String
+    var authorAvatar: UIImage
     var description: String
     var image: UIImage
     
-    init(poster: PosterProtocol, description: String, image: UIImage) {
-        self.poster = poster
+    init(authorName: String, authorAvatar: UIImage, description: String, image: UIImage) {
+        self.authorName = authorName
+        self.authorAvatar = authorAvatar
         self.description = description
         self.image = image
     }

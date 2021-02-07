@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 
 class LoginViewController: UIViewController {
@@ -79,8 +80,10 @@ class LoginViewController: UIViewController {
         view.backgroundColor = .vkBlue
         
         view.addSubview(logoImageView)
-        logoImageView.centerX(inView: view, topAnchor: view.safeAreaLayoutGuide.topAnchor)
-        logoImageView.setDimensions(width: 150, height: 150)
+        logoImageView.snp.makeConstraints { make in
+            make.centerX.equalTo(view.safeAreaLayoutGuide.snp.top)
+            make.size.equalTo(CGSize(width: 150, height: 150))
+        }
         
         let stack = UIStackView(arrangedSubviews: [emailContainerView, passwordContainerView, loginButton])
         stack.axis = .vertical
@@ -88,7 +91,10 @@ class LoginViewController: UIViewController {
         stack.distribution = .fillEqually
         
         view.addSubview(stack)
-        stack.anchor(top: logoImageView.bottomAnchor, left: view.leftAnchor, right: view.rightAnchor, paddingLeft: 32, paddingRight: 32)
+        stack.snp.makeConstraints { make in
+            make.top.equalTo(logoImageView.snp.bottom).offset(32)
+            make.right.equalToSuperview().offset(32)
+        }
     }
 
 }

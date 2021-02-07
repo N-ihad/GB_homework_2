@@ -1,20 +1,20 @@
 //
-//  NewsVC.swift
+//  NewsFeedViewContro.swift
 //  Eigth homework task
 //
 //  Created by Nihad on 11/16/20.
 //
 
 import UIKit
+import SnapKit
 
-let descr = "asdfasdfa ksdmflka msdlkfma lskdmfl akmsdlfkm alsdmfl amsdlkfm alskdmfl askmdlf masldkfm laskdmfl amsdlf masl asmdflk amsldkmf laskmdfl kamsdlkfm aslkdmf"
+let descr = "asdfasdfa ksdmflka msdlkfma lskdmfl akmsdlfkm alsdmfl amsdlkfm alskdmfl askmdlf masldkfm laskdmfl amsdlf masl asmdflk amsldkmf laskmdfl kamsdlkfm aslkdmf dfa ksdmflka msdlkfma lskdmfl akmsdlfkm alsdmfl amsdlkfm alskdmfl askmdlf masldkfm laskdmfl amsdlf masl asmdflk amsldkmf laskmdfl kamsdlkfm aslkdmf"
 
-class NewsViewController: UIViewController {
+class NewsFeedViewController: UIViewController {
     
     // MARK: - Properties
-//    var posts: [Post] = [Post(poster: user, description: descr, image: UIImage(named: "testAvatar1")!),
-//                         Post(poster: group, description: descr, image: UIImage(named: "testAvatar")!),]
-    var posts: [Post] = []
+    var posts: [Post] = [Post(authorName: "Test Testov", authorAvatar: UIImage(named: "vk-logo")!, description: descr, image: UIImage(named: "testAvatar1")!),
+                         Post(authorName: "Test1 Testov1", authorAvatar: UIImage(named: "vk-logo")!, description: descr, image: UIImage(named: "testAvatar")!),]
     var tableView = UITableView()
     
     
@@ -25,8 +25,6 @@ class NewsViewController: UIViewController {
 
         configureUI()
     }
-    
-    // MARK: - Selectors
     
     // MARK: - Helpers
     
@@ -39,14 +37,18 @@ class NewsViewController: UIViewController {
     func configureTableView() {
         tableView.delegate = self
         tableView.dataSource = self
-        view.addSubview(tableView)
         tableView.separatorStyle = .none
-        tableView.register(PostCell.self, forCellReuseIdentifier: "PostCell")
-        tableView.pinTo(view)
+        tableView.allowsSelection = false
+        tableView.register(PostTableViewCell.self, forCellReuseIdentifier: "PostCell")
+        
+        view.addSubview(tableView)
+        tableView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
     }
 }
 
-extension NewsViewController: UITableViewDelegate, UITableViewDataSource {
+extension NewsFeedViewController: UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -56,7 +58,7 @@ extension NewsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell") as! PostCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell") as! PostTableViewCell
         let post = posts[indexPath.row]
         cell.set(post: post)
         

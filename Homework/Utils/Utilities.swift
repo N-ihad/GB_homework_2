@@ -6,27 +6,50 @@
 //
 
 import UIKit
+import SnapKit
 
 class Utilities {
     
+    func counterLabel() -> UILabel {
+        let lbl = UILabel()
+        lbl.text = "0"
+        lbl.font = UIFont.boldSystemFont(ofSize: 16)
+        
+        return lbl
+    }
+    
     func inputContainerView(withImage image: UIImage, textField: UITextField) -> UIView {
         let view = UIView()
-        let iv = UIImageView()
         view.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
+        let iv = UIImageView()
         iv.image = image
         iv.tintColor = .white
         
         view.addSubview(iv)
-        iv.anchor(left: view.leftAnchor, bottom: view.bottomAnchor, paddingLeft: 8, paddingBottom: 8, width: 28, height: 24)
+        iv.snp.makeConstraints { make in
+            make.left.equalToSuperview().offset(8)
+            make.bottom.equalToSuperview().offset(-8)
+            make.size.equalTo(CGSize(width: 28, height: 24))
+        }
         
         view.addSubview(textField)
-        textField.anchor(left: iv.rightAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingLeft: 8, paddingBottom: 8)
+        textField.snp.makeConstraints { make in
+            make.left.equalTo(iv.snp.right).offset(8)
+            make.right.equalToSuperview().offset(-8)
+            make.bottom.equalToSuperview().offset(8)
+        }
         
         let dividerView = UIView()
         dividerView.backgroundColor = .white
+        
         view.addSubview(dividerView)
-        dividerView.anchor(left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingLeft: 8, height: 0.3)
+        dividerView.snp.makeConstraints { make in
+            make.left.equalToSuperview().offset(8)
+            make.bottom.equalToSuperview()
+            make.right.equalToSuperview()
+            make.height.equalTo(0.3)
+        }
         
         return view
     }
@@ -46,7 +69,9 @@ class Utilities {
         let imgFilled = imgForSelectedState.imageWith(newSize: CGSize(width: 100, height: 100), color: UIColor.vkBlue)
         btn.setImage(img, for: .normal)
         btn.setImage(imgFilled, for: .selected)
-        btn.setDimensions(width: CGFloat(width), height: CGFloat(height))
+        btn.snp.makeConstraints { make in
+            make.size.equalTo(CGSize(width: width, height: height))
+        }
         
         return btn
     }
@@ -67,39 +92,6 @@ class Utilities {
                 viewToAnimate.transform = CGAffineTransform(scaleX: 1, y: 1)
             }, completion: nil)
         }
-    }
-    
-    func loadingView() -> UIView {
-        let loadingOverlay = UIView()
-        loadingOverlay.contentMode = .scaleAspectFit
-        loadingOverlay.backgroundColor = UIColor.black
-        loadingOverlay.alpha = 0.5
-        loadingOverlay.isUserInteractionEnabled = true
-        loadingOverlay.layer.zPosition = 1
-        
-        let loadingLayer = CAReplicatorLayer()
-        loadingLayer.frame = CGRect(x: -10, y: 0, width: 100, height: 10)
-        let circle = CALayer()
-        circle.frame = CGRect(x: -10, y: 0, width: 10, height: 10)
-        circle.backgroundColor = UIColor.gray.cgColor
-        circle.cornerRadius = 10 / 2
-        loadingLayer.addSublayer(circle)
-        loadingLayer.instanceCount = 3
-        loadingLayer.instanceTransform = CATransform3DMakeTranslation(20, 0, 0)
-        let anim = CABasicAnimation(keyPath: #keyPath(CALayer.opacity))
-        anim.fromValue = 1.0
-        anim.toValue = 0.2
-        anim.duration = 1
-        anim.repeatCount = .infinity
-        circle.add(anim, forKey: nil)
-        loadingLayer.instanceDelay = anim.duration / Double(loadingLayer.instanceCount)
-        
-        let v = UIView()
-        v.layer.addSublayer(loadingLayer)
-        loadingOverlay.addSubview(v)
-        v.center(inView: loadingOverlay)
-        
-        return loadingOverlay
     }
     
 }

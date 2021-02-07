@@ -7,15 +7,12 @@
 
 import UIKit
 
-private let reuseIdentifier = "Cell"
-
-class FriendPhotosCollectionViewController: UICollectionViewController {
-    // MARK: - Properties
+class PhotosCollectionViewController: UICollectionViewController {
     
-    var user: User? {
+    var userID: Int? {
         didSet {
-            guard let user = user else { return }
-            fetchPhotosOfUser(withID: String(user.id))
+            guard let userID = userID else { return }
+            fetchPhotosOfUser(withID: userID)
         }
     }
     var photos: [Photo]? {
@@ -26,67 +23,67 @@ class FriendPhotosCollectionViewController: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        configureUI()
     }
     
     init() {
         super.init(collectionViewLayout: UICollectionViewLayout())
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        layout.itemSize = collectionView.frame.size
-        layout.minimumLineSpacing = 0
-        layout.minimumInteritemSpacing = 10
-        self.collectionView?.setCollectionViewLayout(layout, animated: true)
+        configureCollectionView()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Helpers
-    
-    func fetchPhotosOfUser(withID userID: String) {
-        BackendService.shared.getPhotosOfUser(withID: user!.id) { photos in
+    func fetchPhotosOfUser(withID userID: Int) {
+        BackendService.shared.getPhotosOfUser(withID: userID) { photos in
             self.photos = photos
         }
     }
     
-    func configureUI() {
-        configureCollectionView()
-    }
-    
     func configureCollectionView() {
-        collectionView!.register(FriendPhotosCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.itemSize = collectionView.frame.size
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 10
+        collectionView.setCollectionViewLayout(layout, animated: true)
+        collectionView.register(PhotosTableViewCell.self, forCellWithReuseIdentifier: PhotosTableViewCell.identifier)
         collectionView.isPagingEnabled = true
     }
-    
-    // MARK: UICollectionViewDataSource
+
+}
+
+
+// MARK: UICollectionViewDelegate / UICollectionViewDataSource
+
+extension PhotosCollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return photos?.count ?? 0
     }
-    
+
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! FriendPhotosCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotosTableViewCell.identifier, for: indexPath) as! PhotosTableViewCell
         guard let photos = photos else { return cell }
         cell.photoImageView.kf.setImage(with: URL(string: photos[indexPath.row].photo604!))
         
         return cell
     }
-    
+
     override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if let newCell = cell as? FriendPhotosCell {
+        if let newCell = cell as? PhotosTableViewCell {
             newCell.photoImageView.transform = CGAffineTransform(scaleX: 0.75, y: 0.75)
             UIView.animate(withDuration: 1.0, animations: {() -> Void in
                 newCell.photoImageView.transform = CGAffineTransform(scaleX: 1, y: 1)
             })
         }
     }
+    
 }
 
+// MARK: - UICollectionViewDelegateFlowLayout
 
-extension FriendPhotosCollectionViewController: UICollectionViewDelegateFlowLayout {
+extension PhotosCollectionViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: view.frame.width , height: view.frame.height - (view.safeAreaInsets.top + view.safeAreaInsets.bottom))
     }

@@ -38,7 +38,7 @@ class MainTabController: UITabBarController {
         let groupsVC = GroupsViewController()
         let groupsNav = templateNavigationController(image: UIImage(named: "list.bullet.indent")!, rootViewController: groupsVC)
         
-        let newsVC = NewsViewController()
+        let newsVC = NewsFeedViewController()
         let newsNav = templateNavigationController(image: UIImage(named: "newspaper")!, rootViewController: newsVC)
         
         viewControllers = [friendsNav, groupsNav, newsNav]
