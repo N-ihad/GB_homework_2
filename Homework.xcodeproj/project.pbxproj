@@ -39,6 +39,7 @@
 		205DB04125BCEE13008869C2 /* String+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 205DB04025BCEE13008869C2 /* String+extension.swift */; };
 		20767DF625D043820068BE96 /* PostTableViewCell+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20767DF525D043820068BE96 /* PostTableViewCell+extension.swift */; };
 		20A4E269258F8781003D33BF /* WebLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20A4E268258F8781003D33BF /* WebLoginViewController.swift */; };
+		20ACEB9225D56FF20033FE47 /* NewsFeedPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20ACEB9125D56FF20033FE47 /* NewsFeedPost.swift */; };
 		20DAA17225C04051008129E7 /* FriendsViewController+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20DAA17125C04051008129E7 /* FriendsViewController+extension.swift */; };
 		20F990C2256C069C00718F03 /* PhotosTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F990C1256C069C00718F03 /* PhotosTableViewCell.swift */; };
 		20F990C8256D748500718F03 /* FriendsAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20F990C7256D748500718F03 /* FriendsAnimationController.swift */; };
@@ -81,6 +82,7 @@
 		205DB04025BCEE13008869C2 /* String+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+extension.swift"; sourceTree = "<group>"; };
 		20767DF525D043820068BE96 /* PostTableViewCell+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PostTableViewCell+extension.swift"; sourceTree = "<group>"; };
 		20A4E268258F8781003D33BF /* WebLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebLoginViewController.swift; sourceTree = "<group>"; };
+		20ACEB9125D56FF20033FE47 /* NewsFeedPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFeedPost.swift; sourceTree = "<group>"; };
 		20DAA17125C04051008129E7 /* FriendsViewController+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FriendsViewController+extension.swift"; sourceTree = "<group>"; };
 		20F990C1256C069C00718F03 /* PhotosTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosTableViewCell.swift; sourceTree = "<group>"; };
 		20F990C7256D748500718F03 /* FriendsAnimationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsAnimationController.swift; sourceTree = "<group>"; };
@@ -203,7 +205,9 @@
 		205DB02325BCD36F008869C2 /* News */ = {
 			isa = PBXGroup;
 			children = (
-				2091961525BF89C2008129C2 /* News */,
+				205DB04A25BCF3AB008869C2 /* Model */,
+				205DB02D25BCEA5E008869C2 /* View */,
+				205DB03325BCEB12008869C2 /* Controller */,
 			);
 			path = News;
 			sourceTree = "<group>";
@@ -351,6 +355,7 @@
 			isa = PBXGroup;
 			children = (
 				203D198925646B1700C6FA39 /* Post.swift */,
+				20ACEB9125D56FF20033FE47 /* NewsFeedPost.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -391,16 +396,6 @@
 				202F042225BF805400AC7B4A /* ViewModel */,
 			);
 			path = Groups;
-			sourceTree = "<group>";
-		};
-		2091961525BF89C2008129C2 /* News */ = {
-			isa = PBXGroup;
-			children = (
-				205DB04A25BCF3AB008869C2 /* Model */,
-				205DB02D25BCEA5E008869C2 /* View */,
-				205DB03325BCEB12008869C2 /* Controller */,
-			);
-			path = News;
 			sourceTree = "<group>";
 		};
 		20F9C043258D339D00EB7F38 /* Services */ = {
@@ -555,6 +550,7 @@
 				20DAA17225C04051008129E7 /* FriendsViewController+extension.swift in Sources */,
 				202F041125BF666B00AC7B4A /* FriendsTableViewCell+extension.swift in Sources */,
 				20493BF42562D01800AF4972 /* MainTabController.swift in Sources */,
+				20ACEB9225D56FF20033FE47 /* NewsFeedPost.swift in Sources */,
 				20767DF625D043820068BE96 /* PostTableViewCell+extension.swift in Sources */,
 				20493BFA2562D03100AF4972 /* GroupsViewController.swift in Sources */,
 				20493C072562EDC900AF4972 /* Utilities.swift in Sources */,

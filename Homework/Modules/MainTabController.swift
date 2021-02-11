@@ -20,12 +20,24 @@ class MainTabController: UITabBarController {
                                                         .first?.path {
                 print("DEBUG: documents Directory - \(documentsPath)")
         }
+        
+        fetchUserNewsFeed()
 
         configureViewControllers()
         testRequests()
     }
 
     // MARK: - Helpers
+    
+    func fetchUserNewsFeed() {
+        DispatchQueue.global().async {
+            NetworkService.shared.getUserNewsFeed(of: .post) { response in
+                guard let res = response.value else { return }
+                let posts = res.response.items
+                print(posts.count)
+            }
+        }
+    }
     
     override var shouldAutorotate: Bool {
         return false

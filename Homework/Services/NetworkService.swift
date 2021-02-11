@@ -80,6 +80,12 @@ class NetworkService {
         AF.request(API_URLs.getGroupsWithName, parameters: params).responseDecodable(of: GroupsResponse.self, completionHandler: completion)
     }
     
+    func getUserNewsFeed(of type: NewsFeedPostType, completion: @escaping ((DataResponse<NewsFeedWelcome, AFError>) -> Void)) {
+        var params = defaultParameters
+        params["filters"] = type.rawValue
+        AF.request(API_URLs.getUserNewsFeed, parameters: params).responseDecodable(of: NewsFeedWelcome.self, completionHandler: completion)
+    }
+    
     
     
     // MARK: - Update
@@ -95,18 +101,18 @@ extension NetworkService {
         var userID: String = ""
     }
     
-}
-
-extension NetworkService {
-    
     private struct API_URLs {
         static let getProfileOfUser = "https://api.vk.com/method/users.get"
         static let getFriends = "https://api.vk.com/method/friends.get"
         static let getPhotosOfUser = "https://api.vk.com/method/photos.get"
         static let getGroups = "https://api.vk.com/method/groups.get"
         static let getGroupsWithName = "https://api.vk.com/method/groups.search"
-        
-        private init() { }
+        static let getUserNewsFeed = "https://api.vk.com/method/newsfeed.get"
+    }
+    
+    enum NewsFeedPostType: String {
+        case post = "post"
+        case photo = "photo"
     }
     
 }
