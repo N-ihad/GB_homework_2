@@ -33,8 +33,7 @@ class MainTabController: UITabBarController {
         DispatchQueue.global().async {
             NetworkService.shared.getUserNewsFeed(of: .post) { response in
                 guard let res = response.value else { return }
-                let posts = res.response.items
-                print(posts.count)
+                let _ = res.response.items
             }
         }
     }
