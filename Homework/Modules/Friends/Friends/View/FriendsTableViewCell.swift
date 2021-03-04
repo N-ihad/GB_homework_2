@@ -13,7 +13,12 @@ class FriendsTableViewCell: UITableViewCell {
     static let identifier = "FriendCell"
     private lazy var avatarImageView = makeAvatarImageView()
     private lazy var avatarView = makeAvatarView()
-    private let friendNameLabel = UILabel()
+    private let friendNameLabel: UILabel = {
+        let friendNameLabel = UILabel()
+        friendNameLabel.backgroundColor = .white
+        
+        return friendNameLabel
+    }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

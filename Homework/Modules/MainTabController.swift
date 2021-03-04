@@ -23,6 +23,7 @@ class MainTabController: UITabBarController {
         
         fetchUserNewsFeed()
 
+        configureUINavigationBarAppearance()
         configureViewControllers()
         testRequests()
     }
@@ -40,6 +41,10 @@ class MainTabController: UITabBarController {
     
     override var shouldAutorotate: Bool {
         return false
+    }
+    
+    func configureUINavigationBarAppearance() {
+        UINavigationBar.appearance().isTranslucent = false
     }
     
     func configureViewControllers() {
