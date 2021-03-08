@@ -20,8 +20,6 @@ class MainTabController: UITabBarController {
                                                         .first?.path {
                 print("DEBUG: documents Directory - \(documentsPath)")
         }
-        
-        fetchUserNewsFeed()
 
         configureUINavigationBarAppearance()
         configureViewControllers()
@@ -29,15 +27,6 @@ class MainTabController: UITabBarController {
     }
 
     // MARK: - Helpers
-    
-    func fetchUserNewsFeed() {
-        DispatchQueue.global().async {
-            NetworkService.shared.getUserNewsFeed(of: .post) { response in
-                guard let res = response.value else { return }
-                let _ = res.response.items
-            }
-        }
-    }
     
     override var shouldAutorotate: Bool {
         return false

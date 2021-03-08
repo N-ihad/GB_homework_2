@@ -80,10 +80,37 @@ class NetworkService {
         AF.request(API_URLs.getGroupsWithName, parameters: params).responseDecodable(of: GroupsResponse.self, completionHandler: completion)
     }
     
-    func getUserNewsFeed(of type: NewsFeedPostType, completion: @escaping ((DataResponse<NewsFeedWelcome, AFError>) -> Void)) {
+    func getUserNewsFeed(of type: NewsFeedPostType, completion: @escaping (NewsFeedResponse?) -> Void) {
         var params = defaultParameters
         params["filters"] = type.rawValue
-        AF.request(API_URLs.getUserNewsFeed, parameters: params).responseDecodable(of: NewsFeedWelcome.self, completionHandler: completion)
+        params["count"] = "10"
+        AF.request(API_URLs.getUserNewsFeed, parameters: params)
+            .responseDecodable(of: NewsFeedWelcome.self) { response in
+                switch response.result {
+                case .success(var successResponse):
+                    successResponse.response.setPostOwners()
+                    completion(successResponse.response)
+                case .failure(let error):
+                    print("Error fetching news feed: \(error)")
+                }
+            }
+    }
+    
+    func getUserNewsFeed(of type: NewsFeedPostType, startingFrom from: String, completion: @escaping (NewsFeedResponse?) -> Void) {
+        var params = defaultParameters
+        params["filters"] = type.rawValue
+        params["count"] = "10"
+        params["start_from"] = from
+        AF.request(API_URLs.getUserNewsFeed, parameters: params)
+            .responseDecodable(of: NewsFeedWelcome.self) { response in
+                switch response.result {
+                case .success(var successResponse):
+                    successResponse.response.setPostOwners()
+                    completion(successResponse.response)
+                case .failure(let error):
+                    print("Error fetching news feed: \(error)")
+                }
+            }
     }
     
     

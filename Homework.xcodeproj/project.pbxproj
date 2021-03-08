@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2001023925642D5B004855C0 /* PhotosCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2001023825642D5B004855C0 /* PhotosCollectionViewController.swift */; };
 		2001023F25645D65004855C0 /* GroupsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2001023E25645D65004855C0 /* GroupsTableViewCell.swift */; };
+		2003289625F64AE500892D26 /* NewsFeedViewController+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2003289525F64AE500892D26 /* NewsFeedViewController+UI.swift */; };
 		200E874825C2006600F0CD9D /* FriendsTableViewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200E874725C2006600F0CD9D /* FriendsTableViewViewModel.swift */; };
 		200E874C25C20F5000F0CD9D /* FriendsTableViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200E874B25C20F5000F0CD9D /* FriendsTableViewCellViewModel.swift */; };
 		202F041125BF666B00AC7B4A /* FriendsTableViewCell+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202F041025BF666B00AC7B4A /* FriendsTableViewCell+extension.swift */; };
@@ -50,6 +51,7 @@
 /* Begin PBXFileReference section */
 		2001023825642D5B004855C0 /* PhotosCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosCollectionViewController.swift; sourceTree = "<group>"; };
 		2001023E25645D65004855C0 /* GroupsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsTableViewCell.swift; sourceTree = "<group>"; };
+		2003289525F64AE500892D26 /* NewsFeedViewController+UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewsFeedViewController+UI.swift"; sourceTree = "<group>"; };
 		200E874725C2006600F0CD9D /* FriendsTableViewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsTableViewViewModel.swift; sourceTree = "<group>"; };
 		200E874B25C20F5000F0CD9D /* FriendsTableViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsTableViewCellViewModel.swift; sourceTree = "<group>"; };
 		202F041025BF666B00AC7B4A /* FriendsTableViewCell+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FriendsTableViewCell+extension.swift"; sourceTree = "<group>"; };
@@ -290,6 +292,7 @@
 			isa = PBXGroup;
 			children = (
 				20493BFC2562D03900AF4972 /* NewsFeedViewController.swift */,
+				2003289525F64AE500892D26 /* NewsFeedViewController+UI.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -572,6 +575,7 @@
 				204B2E8E259509D1005E33BA /* User.swift in Sources */,
 				204B2EA1259758D2005E33BA /* BackendService.swift in Sources */,
 				203D19872564665E00C6FA39 /* GlobalGroupsViewController.swift in Sources */,
+				2003289625F64AE500892D26 /* NewsFeedViewController+UI.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

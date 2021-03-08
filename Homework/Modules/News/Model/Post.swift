@@ -9,14 +9,27 @@ import UIKit
 
 class Post {
     var authorName: String
-    var authorAvatar: UIImage
+    var authorAvatarUrl: URL
     var description: String
-    var image: UIImage
+    var imageUrl: URL
+    var comments: NewsFeedComments
+    var likes: NewsFeedLikes
+    var reposts: NewsFeedReposts
     
-    init(authorName: String, authorAvatar: UIImage, description: String, image: UIImage) {
+    init(authorName: String,
+         authorAvatarUrl: URL,
+         description: String,
+         imageUrl: URL,
+         comments: NewsFeedComments,
+         likes: NewsFeedLikes,
+         reposts: NewsFeedReposts)
+    {
         self.authorName = authorName
-        self.authorAvatar = authorAvatar
+        self.authorAvatarUrl = authorAvatarUrl
         self.description = description
-        self.image = image
+        self.imageUrl = imageUrl
+        self.comments = comments
+        self.likes = likes
+        self.reposts = reposts
     }
 }

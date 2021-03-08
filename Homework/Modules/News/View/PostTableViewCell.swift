@@ -74,10 +74,13 @@ class PostTableViewCell: UITableViewCell {
     // MARK: - Helpers
     
     func set(post: Post) {
-        posterImageView.image = post.authorAvatar
+        posterImageView.kf.setImage(with: post.authorAvatarUrl)
         posterNameLabel.text = post.authorName
         postDescriptionTextView.text = post.description
-        postImageView.image = post.image
+        postImageView.kf.setImage(with: post.imageUrl)
+        commentsCountLabel.text = String(post.comments.count)
+        likesCountLabel.text = String(post.likes.count)
+        sharesCountLabel.text = String(post.reposts.count)
     }
     
     func configureUI() {

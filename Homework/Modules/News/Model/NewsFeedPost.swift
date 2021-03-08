@@ -9,28 +9,46 @@ import Foundation
 
 // MARK: - Welcome
 struct NewsFeedWelcome: Codable {
-    let response: NewsFeedResponse
+    var response: NewsFeedResponse
 }
 
 // MARK: - Response
 struct NewsFeedResponse: Codable {
-    let items: [NewsFeedItem]
+    var items: [NewsFeedItem]
     let groups: [NewsFeedGroup]
     let profiles: [NewsFeedProfile]
+    let nextFrom: String
+    
+    enum CodingKeys: String, CodingKey {
+        case items
+        case groups
+        case profiles
+        case nextFrom = "next_from"
+    }
+    
+    mutating func setPostOwners() {
+        for i in 0..<items.count {
+            if let userOwner = profiles.first(where: { $0.id == items[i].sourceID }) {
+                items[i].userOwner = userOwner
+            } else if let groupOwner = groups.first(where: { $0.id == -items[i].sourceID }) {
+                items[i].groupOwner = groupOwner
+            }
+        }
+    }
 }
 
 // MARK: - Group
 struct NewsFeedGroup: Codable {
     let name: String
-    let photo200: String
+    let photo200: String?
     let id: Int
-    let photo50: String
+    let photo50: String?
     let isAdmin: Int
-    let photo100: String
+    let photo100: String?
     let isAdvertiser, isMember: Int
     let type: String
     let isClosed: Int
-    let screenName: String
+    let screenName: String?
 
     enum CodingKeys: String, CodingKey {
         case name
@@ -63,6 +81,8 @@ struct NewsFeedItem: Codable {
     let canDoubtCategory: Bool
     let topicID: Int?
     let copyHistory: [NewsFeedCopyHistory]?
+    var userOwner: NewsFeedProfile?
+    var groupOwner: NewsFeedGroup?
 
     enum CodingKeys: String, CodingKey {
         case canSetCategory = "can_set_category"
@@ -90,9 +110,9 @@ struct NewsFeedItemAttachment: Codable {
 struct NewsFeedLink: Codable {
     let linkDescription, target: String
     let url: String
-    let imageBig: String
+    let imageBig: String?
     let title: String
-    let imageSrc: String
+    let imageSrc: String?
 
     enum CodingKeys: String, CodingKey {
         case linkDescription = "description"
@@ -106,19 +126,19 @@ struct NewsFeedLink: Codable {
 // MARK: - Photo
 struct NewsFeedPhoto: Codable {
     let date: Int
-    let photo75: String
+    let photo75: String?
     let ownerID, userID: Int
-    let photo807: String
+    let photo807: String?
     let text: String
     let postID: Int
     let accessKey: String
     let height, id: Int
-    let photo1280: String
+    let photo1280: String?
     let albumID: Int
-    let photo130, photo2560: String
+    let photo130, photo2560: String?
     let hasTags: Bool
     let width: Int
-    let photo604: String
+    let photo604: String?
 
     enum CodingKeys: String, CodingKey {
         case date
@@ -206,12 +226,12 @@ struct NewsFeedReposts: Codable {
 struct NewsFeedProfile: Codable {
     let firstName: String
     let online: Int
-    let photo50: String
+    let photo50: String?
     let lastName: String
-    let photo100: String
+    let photo100: String?
     let onlineInfo: NewsFeedOnlineInfo
     let sex, id: Int
-    let screenName: String
+    let screenName: String?
 
     enum CodingKeys: String, CodingKey {
         case firstName = "first_name"
@@ -227,7 +247,7 @@ struct NewsFeedProfile: Codable {
 
 // MARK: - OnlineInfo
 struct NewsFeedOnlineInfo: Codable {
-    let isOnline, visible, isMobile: Bool
+    let isOnline, visible, isMobile: Bool?
     let lastSeen: Int?
 
     enum CodingKeys: String, CodingKey {
